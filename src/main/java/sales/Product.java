@@ -6,17 +6,15 @@ public class Product {
     private int stockQuantity;
 
     public Product(String name, double price, int stockQuantity) {
-        if (name == null || name.trim().isEmpty() || !name.matches("[a-zA-Z0-9\\s]+")) {
-            throw new IllegalArgumentException(
-                    "Product name must not be empty and only contain letters, numbers, and spaces.");
+        if (!name.matches("[a-zA-Z0-9\\s]+")) {
+            throw new IllegalArgumentException("Product name must contain only letters and numbers.");
         }
         if (price <= 0) {
-            throw new IllegalArgumentException("Price must be a positive number.");
+            throw new IllegalArgumentException("Price must be positive.");
         }
         if (stockQuantity < 0) {
-            throw new IllegalArgumentException("Stock quantity cannot be negative.");
+            throw new IllegalArgumentException("Stock cannot be negative.");
         }
-
         this.name = name;
         this.price = price;
         this.stockQuantity = stockQuantity;
@@ -43,8 +41,14 @@ public class Product {
 
     public void increaseStock(int qty) {
         if (qty < 0) {
-            throw new IllegalArgumentException("Quantity to add must be positive.");
+            throw new IllegalArgumentException("Cannot add negative stock.");
         }
         stockQuantity += qty;
     }
+
+    @Override
+    public String toString() {
+        return name + " - $" + price;
+    }
 }
+
